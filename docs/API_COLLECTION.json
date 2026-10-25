@@ -1,0 +1,168 @@
+{
+  "info": {
+    "name": "Indie Game Playtest Intelligence API",
+    "description": "Comprehensive Postman collection for Capstone Project 08: Indie Game Playtest Intelligence",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Get System Health & Telemetry",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get CSRF Token",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/csrf-token"
+          }
+        },
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Player\",\n  \"email\": \"newplayer@test.com\",\n  \"password\": \"SecurePass123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"dev@lunarforge.demo\",\n  \"password\": \"DemoPassword123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback & Semantic Duplicates",
+      "item": [
+        {
+          "name": "List Feedback",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/feedback?studioId={{studioId}}"
+          }
+        },
+        {
+          "name": "Submit Feedback",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/feedback",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"buildId\": \"{{buildId}}\",\n  \"sessionId\": \"{{sessionId}}\",\n  \"title\": \"Cannot open inventory in prologue\",\n  \"description\": \"I finished the prologue room but could not find the inventory hotkey.\",\n  \"stepsToReproduce\": \"1. Start prologue. 2. Collect potions. 3. Try to access inventory.\",\n  \"expectedBehavior\": \"Tutorial tells player which key opens inventory.\",\n  \"actualBehavior\": \"No key prompt appears.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Duplicate Candidates",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/duplicates/candidates/{{reportId}}?studioId={{studioId}}"
+          }
+        },
+        {
+          "name": "Review Candidate Decision (Accept Link)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/duplicates/decision",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studioId\": \"{{studioId}}\",\n  \"sourceReportId\": \"{{reportId}}\",\n  \"targetId\": \"{{candidateId}}\",\n  \"decisionStatus\": \"accepted\",\n  \"similarityScore\": 0.88\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Investigation Agent",
+      "item": [
+        {
+          "name": "Run Investigation Agent",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/agent/investigate",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studioId\": \"{{studioId}}\",\n  \"buildId\": \"{{buildId}}\",\n  \"topic\": \"Tutorial Inventory\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Approve Proposal & Create Issue",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/agent/approve-issue",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studioId\": \"{{studioId}}\",\n  \"buildId\": \"{{buildId}}\",\n  \"title\": \"Tutorial Inventory Instruction Missing\",\n  \"description\": \"Approved investigation from AI proposal.\",\n  \"severity\": \"high\",\n  \"evidenceReportIds\": []\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Build QA (Grounded RAG)",
+      "item": [
+        {
+          "name": "Ask Setup Question",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/chat/ask",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studioId\": \"{{studioId}}\",\n  \"buildId\": \"{{buildId}}\",\n  \"question\": \"How do I open the inventory in this build?\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "studioId", "value": "" },
+    { "key": "buildId", "value": "" },
+    { "key": "sessionId", "value": "" },
+    { "key": "reportId", "value": "" },
+    { "key": "candidateId", "value": "" }
+  ]
+}
