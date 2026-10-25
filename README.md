@@ -56,6 +56,7 @@ Copy `.env.example` in `backend/` to `.env`:
 cd backend
 cp .env.example .env
 ```
+If `.env.example` is missing, check with the project maintainer for the required environment variables. Keep your `.env` file private and never commit real credentials or API keys to Git.
 Ensure your `MONGODB_URI` points to your Atlas connection string or local MongoDB instance:
 ```env
 PORT=5000
