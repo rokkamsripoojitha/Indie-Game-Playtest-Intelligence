@@ -25,7 +25,7 @@
 
 ## 2. Technology Stack
 
-- **Frontend**: React 19, Tailwind CSS 4.x, React Router 7, Lucide React, Vite.
+- **Frontend**: React 19, Tailwind CSS 4.x, React Router 7, Lucide React, Vite, with a responsive user interface for different screen sizes.
 - **Backend**: Node.js, Express.js (ES modules), Mongoose ODM, express-session with connect-mongo, CSRF protection, express-rate-limit.
 - **Database**: MongoDB Atlas / local MongoDB with high-dimensional vector schema.
 - **AI & RAG Engine**: Ollama inference (`qwen2.5` / `all-minilm` / `EmbeddingGemma`) with transparent, deterministic high-dimensional cosine vector fallback for offline local testing.
